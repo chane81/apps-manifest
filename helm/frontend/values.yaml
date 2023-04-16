@@ -9,7 +9,7 @@ replicas: 2
 # 컨테이너 포트
 containerPort: 3000
 # acm arn
-acmArn: arn:aws:acm:ap-northeast-2:292667926659:certificate/8a8fe439-4a5f-411c-991f-dc56afaf5029
+acmArn: arn:aws:acm:ap-northeast-2:111111111111:certificate/8a8fe439-4a5f-411c-991f-dc56afaf5029
 
 # 서비스 포트, 타입
 service:
