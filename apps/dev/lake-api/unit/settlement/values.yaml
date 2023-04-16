@@ -1,0 +1,4 @@
+name: lake-api-settlement
+replicas: 2
+ingress:
+    hostPrefix: "api-settlement.dev."

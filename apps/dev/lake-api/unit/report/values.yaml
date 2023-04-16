@@ -1,0 +1,4 @@
+name: lake-api-report
+replicas: 1
+ingress:
+    hostPrefix: "report-api.dev."

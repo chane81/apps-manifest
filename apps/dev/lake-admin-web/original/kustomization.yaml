@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# kustomize overlay
+images:
+- name: overlay-image
+  newName: image-url
+  newTag: image-tag
+
+helmGlobals:
+  chartHome: ../../../../helm
+# CustomResourceDefinition 이 있을 경우 true
+  # name 은 helm 폴더 하위의 helm 폴더 이름과 직결된다.
+helmCharts:
+- includeCRDs: true
+  name: frontend
+  namespace: default
+  releaseName: lake-admin-web
+  valuesFile: values.yaml
+  version: 1.0.0

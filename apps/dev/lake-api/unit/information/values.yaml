@@ -1,0 +1,4 @@
+name: lake-api-information
+replicas: 1
+ingress:
+    hostPrefix: "information-api.dev."

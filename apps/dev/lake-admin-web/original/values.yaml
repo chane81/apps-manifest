@@ -1,0 +1,4 @@
+name: lake-admin-web
+replicas: 3
+ingress:
+    hostPrefix: "admin.dev."

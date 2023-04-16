@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.name}}
+spec:
+  revisionHistoryLimit: 10
+  replicas: {{.Values.replicas}}
+
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+        tier: {{.Values.tier}}
+    spec:
+      containers:
+        - name: {{.Values.name}}
+          imagePullPolicy: Always
+
+          # kustomize overlay
+          image: overlay-image
+
+          ports:
+            - name: http
+              containerPort: {{.Values.containerPort}}
+          resources:
+            requests:
+              cpu: {{.Values.resources.requests.cpu}}
+              memory: {{.Values.resources.requests.memory}}
+            limits:
+              cpu: {{.Values.resources.limits.cpu}}
+              memory: {{.Values.resources.limits.memory}}
+          readinessProbe:
+            httpGet:
+              path: /?readiness
+              port: {{.Values.containerPort}}
+              scheme: HTTP
+            failureThreshold: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 10
+            initialDelaySeconds: {{.Values.readinessProbe.initialDelaySeconds}}
+      terminationGracePeriodSeconds: 30

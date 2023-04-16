@@ -1,0 +1,35 @@
+# metadata, label 명
+name: lake-api
+# namespace
+namespace: default
+# tier: frontend/backend
+tier: backend
+# replica 수
+replicas: 2
+# 컨테이너 포트
+containerPort: 3000
+# acm arn
+acmArn: arn:aws:acm:ap-northeast-2:292667926659:certificate/8a8fe439-4a5f-411c-991f-dc56afaf5029
+
+# 서비스 포트, 타입
+service:
+  port: 80
+  type: NodePort
+
+# resource(cpu, memory) request, limit 설정
+resources:
+  requests:
+    cpu: 50m
+    memory: 200Mi
+  limits:
+    cpu: 500m
+    memory: 500Mi
+
+# probe initial delay 타임
+readinessProbe:
+  initialDelaySeconds: 90
+
+# ingress
+ingress:
+    hostMainDomain: "lake.mosaicsquare.link"
+    hostPrefix: "apps.dev."

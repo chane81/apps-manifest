@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: default
+  name: '{{.Values.name}}-ingress'
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/certificate-arn: {{.Values.acmArn}}
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-2016-08
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    # 그룹명을 주어 해당그룹의 로드벨런스에 인그레스를 묶이게 한다.
+    alb.ingress.kubernetes.io/group.name: 'lake'
+  labels:
+    app: {{.Values.name}}
+    tier: {{.Values.tier}}
+spec:
+  ingressClassName: alb
+  rules:
+    # ex)
+    # admin.dev.lake.mosaicsquare.link
+    # admin.lake.mosaicsquare.link
+    - host: '{{.Values.ingress.hostPrefix}}{{.Values.ingress.hostMainDomain}}'
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{.Values.name}}
+                port:
+                  number: {{.Values.service.port}}

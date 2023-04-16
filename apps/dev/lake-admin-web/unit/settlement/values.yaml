@@ -1,0 +1,4 @@
+name: lake-admin-web-settlement
+replicas: 3
+ingress:
+    hostPrefix: "admin-settlement.dev."
